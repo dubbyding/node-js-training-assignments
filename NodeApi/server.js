@@ -163,9 +163,7 @@ var server = http.createServer((req, res) => {
         (value = values[4])
       )
     }
-  }
-
-  if (values[1] == 'read') {
+  } else if (values[1] == 'read') {
     if (!values[2]) {
       values[2] = 'promise'
     }
@@ -189,9 +187,7 @@ var server = http.createServer((req, res) => {
         (filename = values[3])
       )
     }
-  }
-
-  if (values[1] == 'clear') {
+  } else if (values[1] == 'clear') {
     clear_folder
       .clearFolder('./files/')
       .then((data) => {
@@ -205,6 +201,8 @@ var server = http.createServer((req, res) => {
         console.log(err)
         res.end('all task completed')
       })
+  } else {
+    res.end('No task To Perform')
   }
 })
 server.listen(3000, '127.0.0.1', (err, done) => {
