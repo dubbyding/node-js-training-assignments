@@ -126,7 +126,6 @@ function doReadwriteTask(req, res, cb) {
 var server = http.createServer((req, res) => {
   res.writeHead(200, { 'Content-Type': 'text/plain' })
   values = req.url.split('/')
-  console.log(values)
   if (values[1] == '') {
     doReadwriteTask(req, res, () => {
       res.end('all task completed')
@@ -179,32 +178,32 @@ var server = http.createServer((req, res) => {
         (cb = () => {
           res.end('all task completed')
         }),
-        (filename = 'try')
+        (filename = values[3])
       )
     } else {
-      readTaskWithPromise(
+      readTaskWithCallback(
         (res = res),
         (cb = () => {
           res.end('all task completed')
         }),
-        (filename = 'try')
+        (filename = values[3])
       )
     }
   }
 
-  if (value[1] == 'clear') {
+  if (values[1] == 'clear') {
     clear_folder
       .clearFolder('./files/')
       .then((data) => {
         console.log('Folder is now cleared')
         res.write('Folder is now cleared\n')
-        cb()
+        res.end('all task completed')
       })
       .catch((err) => {
         console.log('Error in clearing folder')
         res.write('Error in clearing folder\n')
         console.log(err)
-        cb()
+        res.end('all task completed')
       })
   }
 })
