@@ -11,10 +11,16 @@ app.use(isLoggedIn);
 
 app.use((req, res, next) => {
   console.log(req.college);
+  delete req.college;
+  // if below code executes then app.get('/') doesn't work
+  /*
   res.json({
     msg: 'The requested value from isLoggedIn',
     data: req.college,
   });
+  */
+  // if below code executes then app.get('/') works
+  next();
 });
 
 app.get('/', (req, res, next) => {
